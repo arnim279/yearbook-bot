@@ -1,0 +1,45 @@
+[
+  {
+    "name": "abizeitung",
+    "type": 1,
+    "description": "Zitat für die Abizeitung speichern",
+    "options": [
+      {
+        "name": "typ",
+        "description": "zitat",
+        "type": 3,
+        "required": true,
+        "choices": [
+          {
+            "name": "Schülerzitat",
+            "value": "Schülerzitat"
+          },
+          {
+            "name": "Lehrerzitat",
+            "value": "Lehrerzitat"
+          },
+          {
+            "name": "Man munkelt, dass...",
+            "value": "Man munkelt, dass..."
+          },
+          {
+            "name": "Wisst ihr noch...",
+            "value": "Wisst ihr noch..."
+          }
+        ]
+      },
+      {
+        "name": "person",
+        "description": "von wem ist das Zitat?",
+        "type": 3,
+        "required": true
+      },
+      {
+        "name": "zitat",
+        "description": "Inhalt des Zitats",
+        "type": 3,
+        "required": true
+      }
+    ]
+  }
+]
