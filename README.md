@@ -1,17 +1,12 @@
 # schulserver-abizeitung-bot
 
-a simple Discord bot to send formatted embedded messages via application commands
+a Discord bot to save quotes for our yearbook. It makes the quotes look pretty by using embeds and saves them to a notion database
 
-> you may want to change the embed in [index.js](./index.js#65)
+## build
+```bash
+npm i
 
-## requirements
+npm --openssl-legacy-provider run build #needed for node 17
 
-- nodejs
-- cloudflare workers (wrangler)
-
-## setup
-
-- `PUT` the [commands](./commands.json) to `https://discord.com/api/v9/applications/{your-application-id}/commands`
-- run `npm i && npm run build`, then `wrangler publish`
-- register your cloudflare worker as the http endpoint [in the bot developer portal](https://discord.dev/applications)
-- add the bot to your server and you're good to go
+wrangler publish
+```

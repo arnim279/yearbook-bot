@@ -1,10 +1,13 @@
 import nacl from 'tweetnacl';
 import { Buffer } from 'buffer';
-import APPLICATION_KEY from './secret.js';
+import {
+  APPLICATION_KEY,
+  NOTION_API_KEY,
+  CHANNELS,
+  NOTION_DATABASE_ID,
+} from './secret.js';
 
 const jsonHeader = { headers: { 'content-type': 'application/json' } };
-
-const channels = ['903275673823625216', '822136541542613023'];
 
 addEventListener('fetch', event => {
   event.respondWith(handleRequest(event.request));
@@ -46,7 +49,7 @@ async function handleRequest(request) {
     return new Response(JSON.stringify({ type: 1 }), jsonHeader);
   }
 
-  if (!channels.includes(body.channel_id))
+  if (!CHANNELS.includes(body.channel_id))
     return new Response(
       JSON.stringify({
         type: 4,
@@ -57,6 +60,8 @@ async function handleRequest(request) {
       }),
       jsonHeader,
     );
+
+  saveToNotion(body);
 
   return new Response(
     JSON.stringify({
@@ -73,4 +78,53 @@ async function handleRequest(request) {
     }),
     jsonHeader,
   );
+}
+
+async function saveToNotion(body) {
+  fetch('https://api.notion.com/v1/pages', {
+    method: 'POST',
+    headers: new Headers({
+      'content-type': 'application/json',
+      'notion-version': '2021-08-16',
+      authorization: `Bearer ${NOTION_API_KEY}`,
+    }),
+    body: JSON.stringify({
+      parent: {
+        database_id: NOTION_DATABASE_ID,
+      },
+      properties: {
+        Typ: {
+          type: 'rich_text',
+          rich_text: [
+            {
+              text: {
+                content: body.data.options[0].value,
+              },
+            },
+          ],
+        },
+        Person: {
+          type: 'title',
+          title: [
+            {
+              type: 'text',
+              text: {
+                content: body.data.options[1].value,
+              },
+            },
+          ],
+        },
+        Zitat: {
+          type: 'rich_text',
+          rich_text: [
+            {
+              text: {
+                content: `"${body.data.options[2].value}"`,
+              },
+            },
+          ],
+        },
+      },
+    }),
+  });
 }
