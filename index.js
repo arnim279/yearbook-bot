@@ -61,7 +61,7 @@ async function handleRequest(request) {
       jsonHeader,
     );
 
-  saveToNotion(body);
+  await saveToNotion(body);
 
   return new Response(
     JSON.stringify({
@@ -81,7 +81,7 @@ async function handleRequest(request) {
 }
 
 async function saveToNotion(body) {
-  fetch('https://api.notion.com/v1/pages', {
+  await fetch('https://api.notion.com/v1/pages', {
     method: 'POST',
     headers: new Headers({
       'content-type': 'application/json',
