@@ -1,6 +1,6 @@
-# schulserver-abizeitung-bot
+# yearbook-bot
 
-a Discord bot to save quotes for our yearbook. It makes the quotes look pretty by using embeds and saves them to a notion database
+A Discord bot to save quotes for our yearbook. It makes the quotes look pretty by using embeds and saves them to a notion database.
 
 ## build
 ```bash
